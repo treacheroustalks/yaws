@@ -12,7 +12,10 @@ ERL_BIN=$YAWS_ERLBINDIR/erl
 WERL_BIN=$YAWS_ERLBINDIR/werl
 
 # For rebar, support only local install for the yaws script.
-YAWS_LOCALINSTALL=true
+
+# This is overridden and set to false for the Treacherous Talks fork since we
+# only need to embed Yaws in our application, not install it.
+YAWS_LOCALINSTALL=false
 
 script=`basename $0`
 
@@ -80,9 +83,12 @@ case $YAWS_LOCALINSTALL in
         fi
        ;;
     *)
-       echo "ERROR: Configurations other than 'localinstall' not yet \
-            supported with rebar"
-       exit 1
+       # We return success here insted of one since we only need to embed Yaws
+       # in our Treacherous Talks web frontend application, not install it.
+
+       #echo "ERROR: Configurations other than 'localinstall' not yet \
+       #     supported with rebar"
+       exit 0
        ;;
 esac
 
