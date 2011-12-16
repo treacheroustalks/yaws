@@ -90,7 +90,6 @@ handshake(hi_75, _Arg, _CliSock, WebSocketLocation, Origin, _Protocol) ->
      "\r\n"];
 
 handshake(_Ver, Arg, _CliSock, _WebSocketLocation, _Origin, _Protocol) ->
-    io:format("10!~n",[]),
     Key = get_nonce_header(Arg#arg.headers),
     AcceptHash = hash_nonce(Key), 
     ["HTTP/1.1 101 Switching Protocols\r\n",
@@ -103,7 +102,7 @@ ws_version(Headers) ->
     %io:format("IDing Websocket Version...~n~p~n",[Headers]),
     case query_header("sec-websocket-version", Headers) of
 	"8" -> 8;
-	"17" -> 17;
+	"13" -> 8; % 13 can be handled like 8 for now.
 	_ ->
 	    case query_header("sec-websocket-key1", Headers) of
 		undefined -> 
